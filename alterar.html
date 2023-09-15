@@ -25,21 +25,25 @@
     </header>
 
     <div class="container">
-        <h1>Cadastrar</h1>
+        <h1>Alterar</h1>
         <div class="form">
             <form>
-                <input type="text" name="nome" id="nome" placeholder="ESCREVA O NOME DE SUA PESSOA" class="input_text">
-                <input type="text" name="idade" id="idade" placeholder="ESCREVA A IDADE DE SUA PESSOA" class="input_text">
+                <input type="text" name="nome" id="idAlterar_nome" placeholder="ESCREVA O NOME DE SUA PESSOA" class="input_text">
             </form>
             <div class="botoes">
-                <button id="btnSalvar">SALVAR</button>
+                <button id="btnBuscar">BUSCAR</button>   
             </div>
         </div>
 
         <div>
-            <div class="botoes"></div>
-                <button id="btnListar">LISTAR</button>
-                <button id="btnLimpar">LIMPAR</button>
+            <div class="form">
+                <form>
+                    <input type="text" name="nome" id="alterar_nome" placeholder="ESCREVA O NOME DE SUA PESSOA" class="input_text">
+                    <input type="text" name="idade" id="alterar_idade" placeholder="ESCREVA A IDADE DE SUA PESSOA" class="input_text">
+                </form>
+                <div class="botoes">
+                    <button id="btnAlterar">ALTERAR</button> 
+                </div>  
             </div>
 
             <div id="listar">

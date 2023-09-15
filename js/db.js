@@ -32,12 +32,15 @@ async function createDB() {
 window.addEventListener("DOMContentLoaded", async event => {
     createDB();
     document.getElementById("input");
-    document.getElementById("btnSalvar").addEventListener("click", addData); 
-    document.getElementById("btnListar").addEventListener("click", getData);
+    document.getElementById("btnSalvar").addEventListener("click", cadastrar); 
+    document.getElementById("btnListar").addEventListener("onchange", listar);
     document.getElementById("btnLimpar").addEventListener("click", limpar)
+    document.getElementById("btnBuscar").addEventListener("click", buscar);
+    document.getElementById("btnAlterar").addEventListener("click", alterar);
+    document.getElementById("btnDeletar").addEventListener("click", deletar);
 });
 
-async function addData() {
+async function cadastrar() {
     let nome = document.getElementById("nome").value
     let idade = document.getElementById("idade").value
 
@@ -48,9 +51,12 @@ async function addData() {
         year: idade 
     });
     await tx.done
+    showResult('Sucesso ao Cadastrar!')
+    document.getElementById("nome").value = ''
+    document.getElementById("idade").value = ''
 }
 
-async function getData() {
+async function listar() {
     if (db == undefined) { 
     showResult("O banco de dados está fechado"); 
     return;
@@ -61,6 +67,7 @@ async function getData() {
     const store = tx.objectStore('pessoas');
     const value = await store.getAll();
     if (value) { 
+        showResult("busca com sucesso!")
         imprimirListagem(value);
 
     } else {
@@ -69,9 +76,39 @@ async function getData() {
     }
 }
 
+async function deletar() {
+    let nome = document.getElementById("nome").value
+    let idade = document.getElementById("idade").value
+
+    const tx = await db.transaction('pessoas', 'readwrite');
+    const store = tx.objectStore('pessoas');
+    store.deletar({ 
+        name: nome,
+        year: idade 
+    });
+    await tx.done
+}
+
+function buscar {
+     let id_alterar = document.getElementById('idAlterar_nome')
+
+}
+
+async function alterar() {
+    let nome = document.getElementById("alterar _nome").value
+    let idade = document.getElementById("alterar_idade").value
+
+    const tx = await db.transaction('pessoas', 'readwrite');
+    const store = tx.objectStore('pessoas');
+    store.update({ 
+        name: nome,
+        year: idade 
+    });
+    await tx.done
+}
+
 function limpar() {
-    document.getElementById("nome").value = ''
-    document.getElementById("idade").value = ''
+    document.getElementById("listar") = ''
 }
 
 function showResult(text){
@@ -80,10 +117,8 @@ function showResult(text){
 
 function imprimirListagem(pessoas) {
     let div_listar = document.getElementById("listar")
-
+    
     pessoas.map(item => {
-        div_listar.append(`
-              Nome: ${item.name}, idade: ${item.year}.
-        `)
+        div_listar.appendChild(`Nome: ${item.nome}, Idade: ${item.idade}`)
     })
 }
